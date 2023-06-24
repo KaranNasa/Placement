@@ -9,33 +9,27 @@ class Solution
 {   
     public:
     //Function to return sum of upper and lower triangles of a matrix.
-    void sum_ans(int &sum1,int &sum2,const vector<vector<int>> &matrix,int n,bool check)
-    {
-        // if check==true then upper diagonal elements
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(check and i<=j)
-                    sum1+=matrix[i][j];
-                
-                if(!check and i>=j)
-                    sum2+=matrix[i][j];
-                
-            }
-        }
-    }
     vector<int> sumTriangles(const vector<vector<int> >& matrix, int n)
     {
         // code here
+        
         vector<int> ans;
-        int sum1=0,sum2=0;
+        int sum1=0;
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                sum1+=matrix[i][j];
+            }
+        }
+        ans.push_back(sum1);
         
-        sum_ans(sum1,sum2,matrix,n,true);
-        
-        sum_ans(sum1,sum2,matrix,n,false);
-        
+        sum1=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<=i;j++){
+                sum1+=matrix[i][j];
+            }
+        }
         
         ans.push_back(sum1);
-        ans.push_back(sum2);
         
         return ans;
     }
