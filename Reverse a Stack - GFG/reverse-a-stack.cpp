@@ -10,21 +10,18 @@ using namespace std;
 
 class Solution{
 public:
-    void insert(stack<int> &St,int insert_elem)
+    void insert(stack<int> &St,int top_elem)
     {
-        // Base Case
         if(St.empty())
         {
-            St.push(insert_elem);
+            St.push(top_elem);
             return;
         }
-        // Hypothesis
-        int top_elem=St.top();
+        int top=St.top();
         St.pop();
-        insert(St,insert_elem);
+        insert(St,top_elem);
         
-        // Induction
-        St.push(top_elem);
+        St.push(top);
     }
     void reverse_stack(stack<int> &St)
     {
@@ -32,12 +29,13 @@ public:
         if(St.size()==1)
             return;
         
-        // Hypothesis - reduce the size of the stack
+        // Hypothesis
         int top_elem=St.top();
         St.pop();
+        
         reverse_stack(St);
         
-        // Induction - top_elem ko wapis insert karna hai
+        // INduction
         insert(St,top_elem);
         
     }
