@@ -23,43 +23,26 @@ class Solution
 {
     public:
     //Function to check whether a Binary Tree is BST or not.
-    int max_value(Node *root)
+    bool solve(Node *root,int lower_range,int higher_range)
     {
         if(root==NULL)
-            return 0;
-        else if(root->right==NULL)
-            return root->data;
-        else
-            return max_value(root->right);
-    }
-    
-    int min_value(Node *root){
-        if(root==NULL){
-            return INT_MAX;
+            return true;
+        
+        if(root->data > lower_range and root->data < higher_range){
+              return (solve(root->left,lower_range,root->data)) and (solve(root->right,root->data,higher_range));
         }
-        else if(root->left==NULL)
-            return root->data;
-        else
-            return min_value(root->left);
+        else{
+            return false;
+        }
     }
     bool isBST(Node* root) 
     {
         // Your code here
         if(root==NULL)
             return true;
-        if(root->left==NULL and root->right==NULL)  // leaf node 
-            return true;
-            
-        int left_max_value=max_value(root->left);
-        int right_min_value=min_value(root->right);
         
-        if(root->data > left_max_value and root->data < right_min_value)
-        {
-            return (isBST(root->left) && isBST(root->right));
-        }
-        else{
-            return false;
-        }
+        return solve(root,INT_MIN,INT_MAX);
+        
     }
 };
 
