@@ -7,32 +7,41 @@ using namespace std;
 class Solution {
   public:
     int totalFruits(int N, vector<int> &fruits) {
+        // its basically like i want only 2 types of fruit
+        
         unordered_map<int,int> m;
-        int i=0,j=0,count=0;
-        int max1=INT_MIN;
-        while(j<N)
-        {
+        int i=0,j=0;
+        int length_window=0;
+        
+        // only single fruit is there
+        bool single_fruit=true;
+        
+        while(j<N){
             m[fruits[j]]++;
-            count++;
-            if(m.size()<=2)
-            {
-                max1=max(max1,count);
+            if(m.size()<2)
+                j++;
+            else if(m.size()==2){
+                single_fruit=false;
+                length_window=max(length_window,j-i+1);
                 j++;
             }
             else{
-                while(m.size()>2)
-                {
+                // m.size() > 3
+                // length_window=max(length_window,j-i);
+                while(m.size()>2){
                     m[fruits[i]]--;
-                    count--;
                     if(m[fruits[i]]==0)
                         m.erase(fruits[i]);
                     
                     i++;
                 }
+                length_window=max(length_window,j-i+1);
                 j++;
             }
         }
-        return max1;
+        if(single_fruit)
+            return N;
+        return length_window;
     }
 };
 
