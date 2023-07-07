@@ -11,32 +11,44 @@ class Solution
     {
         // code here
         
-        priority_queue<pair<int, int>,
-		               vector<pair<int, int> >, greater<pair<int, int>>> pq;
-
-		vector<int> vis(V, 0);
-		// {wt, node}
-		pq.push({0, 0});
-		int sum = 0;
-		while (!pq.empty()) {
-			auto it = pq.top();
-			pq.pop();
-			int node = it.second;
-			int wt = it.first;
-
-			if (vis[node] == 1) continue;
-			// add it to the mst
-			vis[node] = 1;
-			sum += wt;
-			for (auto it : adj[node]) {
-				int adjNode = it[0];
-				int edW = it[1];
-				if (!vis[adjNode]) {
-					pq.push({edW, adjNode});
-				}
-			}
-		}
-		return sum;
+        // vector<pair<int,int>> adj_list[V];
+        // first create the adjacency list
+        // for(auto itr:adj){
+        //     cout<<itr[0]<<" "itr[1]<<" "<<itr[2]<<endl;
+        // }
+        
+        // first create a min heap for distance and node
+        
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push({0,0});
+        
+        // create a vis array
+        vector<int> vis(V,0);
+        
+        int MST_sum=0;
+        
+        while(!pq.empty())
+        {
+            auto itr=pq.top();
+            pq.pop();
+            
+            int dist=itr.first;
+            int node=itr.second;
+            
+            if(!vis[node])
+            {
+                vis[node]=1;
+                MST_sum+=dist;
+                // now look for adj nodes which are not visited
+                for(auto it:adj[node]){
+                    if(!vis[it[0]]){
+                        pq.push({it[1],it[0]});
+                    }
+                }
+            }
+        }
+        
+        return MST_sum;
     }
 };
 
