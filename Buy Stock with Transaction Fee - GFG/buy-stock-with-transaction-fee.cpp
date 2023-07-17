@@ -22,8 +22,20 @@ class Solution{
     }
     long long maximumProfit(vector<long long>&prices, int n, int fee) {
         // Code here
-        vector<vector<long long>> dp(n+1,vector<long long>(2,-1));
-        return solve(0,1,prices,n,fee,dp);
+        vector<vector<long long>> dp(n+1,vector<long long>(2,0));
+        // return solve(0,1,prices,n,fee,dp);
+        for(int index=n-1;index>=0;index--){
+            for(int buy=0;buy<=1;buy++){
+                if(buy){
+                    dp[index][buy]=max(-prices[index]+dp[index+1][0],dp[index+1][1]);
+                }
+                else{
+                    dp[index][buy]=max(prices[index]-fee+dp[index+1][1],dp[index+1][0]);
+                }
+            }
+        }
+        
+        return dp[0][1];
     }
 };
 
