@@ -9,27 +9,23 @@ using namespace std;
 
 class Solution {
   public:
-    int solve(int index,int buy,int k,int n,int A[],vector<vector<vector<int>>> &dp)
-    {
-        if(index==n || k==0)
-            return 0;
-        
-        if(dp[index][buy][k]!=-1)
-            return dp[index][buy][k];
-            
-        if(buy){
-            return dp[index][buy][k]=max(-A[index]+solve(index+1,0,k,n,A,dp),solve(index+1,1,k,n,A,dp));
-        }
-        else{
-            return dp[index][buy][k]=max(A[index]+solve(index+1,1,k-1,n,A,dp),solve(index+1,0,k,n,A,dp));
-        }
-    }
-    int maxProfit(int K, int N, int A[]) {
+    int maxProfit(int K, int n, int A[]) {
         // code here
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>> (2,vector<int>(K+1,0)));
+        for(int index=n-1;index>=0;index--){
+            for(int buy=0;buy<=1;buy++){
+                for(int k=1;k<=K;k++){
+                    if(buy){
+                        dp[index][buy][k]=max(-A[index]+dp[index+1][0][k],dp[index+1][1][k]);
+                    }
+                    else{
+                        dp[index][buy][k]=max(A[index]+dp[index+1][1][k-1],dp[index+1][0][k]);
+                    }
+                }
+            }
+        }
         
-        vector<vector<vector<int>>> dp(N+1,vector<vector<int>>(2,vector<int>(K+1,-1)));
-        
-        return solve(0,1,K,N,A,dp);
+        return dp[0][1][K];
     }
 };
 
