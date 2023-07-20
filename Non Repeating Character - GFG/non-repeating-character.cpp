@@ -12,23 +12,15 @@ class Solution
     char nonrepeatingCharacter(string S)
     {
        //Your code here
-       int n=S.length();
-       unordered_map<char,bool> m;
-       for(int i=0;i<n;i++)
-       {
-           if(m.find(S[i])==m.end())
-           {
-               m[S[i]]=true;
-           }
-           else{
-               m[S[i]]=false;
-           }
-       }
-       for(int i=0;i<n;i++)
-       {
-           if(m[S[i]])
+       vector<int> freq(26,0);
+       for(int i=0;i<S.length();i++)
+        freq[S[i]-'a']++;
+       
+       for(int i=0;i<S.length();i++){
+           if(freq[S[i]-'a']==1)
             return S[i];
        }
+       
        return '$';
     }
 
