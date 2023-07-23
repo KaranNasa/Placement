@@ -45,31 +45,31 @@ class Solution
     {
        // Your Code here
        
-       // do level order traversal
        vector<int> ans;
        if(root==NULL)
         return ans;
        
        queue<Node *> q;
        q.push(root);
-       while(!q.empty())
-       {
+       while(!q.empty()){
            int size=q.size();
-           int curr_ans;
-           while(size--)
-           {
-               Node *temp=q.front();
+           int curr_ans=-1;
+           while(size--){
+               Node *node=q.front();
                q.pop();
-               curr_ans=temp->data;
                
-               if(temp->left)
-                q.push(temp->left);
+               curr_ans=node->data;
+               
+               if(node->left)
+                q.push(node->left);
+               
+               if(node->right)
+                q.push(node->right);
                 
-                if(temp->right)
-                    q.push(temp->right);
            }
            ans.push_back(curr_ans);
        }
+       
        return ans;
     }
 };
