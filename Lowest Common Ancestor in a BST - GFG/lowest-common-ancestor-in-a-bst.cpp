@@ -22,21 +22,20 @@ class Solution{
         Node* LCA(Node *root, int n1, int n2)
         {
             // code here
-            if(root==NULL)
-                return NULL;
-            
             Node *p=root;
-            while(p!=NULL)
-            {
-                if(p->data == n1 || p->data==n2)
+            while(p!=NULL){
+                if(p->data==n1 || p->data==n2)
                     return p;
                 
-                else if(p->data > n1 and p->data > n2)
+                else if(p->data >n1 and p->data > n2)
                     p=p->left;
-                else if(p->data <n1 and p->data < n2)
+                
+                else if(p->data < n1 and p->data < n2)
                     p=p->right;
-                else
+                
+                else{
                     return p;
+                }
             }
             return p;
         }
