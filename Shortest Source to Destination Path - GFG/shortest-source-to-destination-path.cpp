@@ -11,48 +11,48 @@ class Solution {
   public:
     bool check(int x,int y,int n,int m,vector<vector<int>> A)
     {
-        if(x<0 || x>=n or y<0 || y>=m or A[x][y]==2 || A[x][y]==0)
+        if(x<0 || x>=n || y<0 || y>=m || A[x][y]==0)
             return false;
         else
             return true;
     }
-    int shortestDistance(int n, int m, vector<vector<int>> A, int X, int Y) {
+    int shortestDistance(int N, int M, vector<vector<int>> A, int X, int Y) {
         // code here
         
-        if(A[0][0]==0 || A[X][Y]==0)
-            return -1;
-            
-        queue<pair<int,pair<int,int>>> q;
-        q.push({0,{0,0}});
+        vector<vector<int>> dis(N,vector<int>(M,INT_MAX));
         
-        A[0][0]=2;
+        dis[0][0]=0;
         
-        while(!q.empty()){
-            int dist=q.front().first;
-            int value_x=q.front().second.first;
-            int value_y=q.front().second.second;
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>> pq;
+        int curr_distance=0;
+        
+        pq.push({0,{0,0}});
+        while(!pq.empty()){
+            int curr_dist=pq.top().first;
+            int x=pq.top().second.first;
+            int y=pq.top().second.second;
             
-            q.pop();
+            if(x==X and y==Y)
+                return curr_dist;
             
-            if(value_x==X and value_y==Y){
-                return dist;
-            }
+            pq.pop();
             
-            int x_val[4]={0,0,1,-1};
-            int y_val[4]={1,-1,0,0};
+            int i_value[4]={0,0,1,-1};
+            int j_value[4]={1,-1,0,0};
             
             for(int i=0;i<4;i++){
-                int new_x=value_x + x_val[i];
-                int new_y=value_y + y_val[i];
+                int new_x=x+i_value[i];
+                int new_y=y+j_value[i];
                 
-                if(check(new_x,new_y,n,m,A)){
-                    A[new_x][new_y]=2;
-                    
-                    q.push({dist+1,{new_x,new_y}});    
+                if(check(new_x,new_y,N,M,A)){
+                    if(dis[new_x][new_y] > curr_dist + 1){
+                         dis[new_x][new_y]=curr_dist+1;
+                         pq.push({curr_dist+1,{new_x,new_y}});     
+                    }
+                   
                 }
             }
         }
-        
         return -1;
     }
 };
