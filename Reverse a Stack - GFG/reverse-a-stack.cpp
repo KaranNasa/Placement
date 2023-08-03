@@ -10,37 +10,33 @@ using namespace std;
 
 class Solution{
 public:
-    void insert(stack<int> &St,int top_elem)
+    void insert_into_stack(stack<int> &st,int elem)
     {
-        if(St.empty())
-        {
-            St.push(top_elem);
+        if(st.empty()){
+            st.push(elem);
             return;
         }
-        int top=St.top();
-        St.pop();
-        insert(St,top_elem);
         
-        St.push(top);
+        int top_elem=st.top();
+        st.pop();
+        insert_into_stack(st,elem);
+        
+        st.push(top_elem);
     }
-    void reverse_stack(stack<int> &St)
+    void solve(stack<int> &st)
     {
-        // Base Case
-        if(St.size()==1)
+        if(st.empty())
             return;
         
-        // Hypothesis
-        int top_elem=St.top();
-        St.pop();
+        int elem=st.top();
+        st.pop();
         
-        reverse_stack(St);
+        solve(st);
         
-        // INduction
-        insert(St,top_elem);
-        
+        insert_into_stack(st,elem);
     }
     void Reverse(stack<int> &St){
-        reverse_stack(St);
+        solve(St);
     }
 };
 
