@@ -6,32 +6,24 @@ using namespace std;
 class Solution{
     public:
     //Complete this function
-    void solve(int index,int n,vector<int> &vis,vector<string> &ans,string curr_ans,string S)
+    void solve(int index,string S,int n,vector<string> &ans)
     {
-        if(curr_ans.length()==n){
-            ans.push_back(curr_ans);
+        if(index==n){
+            ans.push_back(S);
             return;
         }
-        
-        // for this index, we can pick any value form the array which is not visited
-        for(int i=0;i<n;i++){
-            if(!vis[i])
-            {
-                vis[i]=1;
-                solve(i+1,n,vis,ans,curr_ans+S[i],S);
-                vis[i]=0;   // backtrack
-            }
+        for(int i=index;i<n;i++){
+            swap(S[i],S[index]);
+            solve(index+1,S,n,ans);
+            swap(S[i],S[index]);
         }
     }
     vector<string> permutation(string S)
     {
         //Your code here
-        int n=S.length();
-        vector<int> vis(n,0);
         vector<string> ans;
-        string curr_ans="";
+        solve(0,S,S.length(),ans);
         
-        solve(0,n,vis,ans,curr_ans,S);
         sort(ans.begin(),ans.end());
         return ans;
     }
