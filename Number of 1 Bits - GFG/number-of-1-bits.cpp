@@ -5,15 +5,16 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int setBits(int N) {
+    int setBits(int n) {
         // Write Your Code here
-        int rsb_mask;
+        
         int count=0;
-        while(N!=0)
+        int rsb_mask=(n & -n);
+        while(n!=0)
         {
-            rsb_mask=(N & -N);
-            N=N-rsb_mask;
             count++;
+            n=n-rsb_mask;
+            rsb_mask=(n&-n);
         }
         
         return count;
