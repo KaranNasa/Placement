@@ -44,10 +44,8 @@ public:
             ans.push_back(val2);
         }
         return ans;
-        
     }
 };
-
 
 //{ Driver Code Starts.
 int main(){
