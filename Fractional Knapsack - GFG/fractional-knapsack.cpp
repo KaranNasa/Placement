@@ -22,39 +22,41 @@ class Solution
 {
     public:
     //Function to get the maximum total value in the knapsack.
-    
     static bool comp(pair<int,int> &a,pair<int,int> &b)
     {
+        // value/weight should be high
         double val1=(double)a.first/(double)a.second;
         double val2=(double)b.first/(double)b.second;
-        
-        return val1>val2;
+    
+        return val1 > val2;
     }
     double fractionalKnapsack(int W, Item arr[], int n)
     {
         // Your code here
-        vector<pair<int,int>> p;
-        for(int i=0;i<n;i++){
-            p.push_back({arr[i].value,arr[i].weight});
-        }
-        
-        sort(p.begin(),p.end(),comp);
-        
-        double cost=0;
+        vector<pair<int,int>> vec;
         for(int i=0;i<n;i++)
-        {
-            if(W>=p[i].second)
-            {
-                cost+=p[i].first;
-                W-=p[i].second;
+            vec.push_back({arr[i].value,arr[i].weight});
+        
+        sort(vec.begin(),vec.end(),comp);
+        
+        double profit=0;
+        int i=0;
+        while(W>0 and i<n){
+            if(vec[i].second <= W){
+                profit+=vec[i].first;
+                W-=vec[i].second;
             }
             else{
-                double weight_1_unit=(double)p[i].first/(double)p[i].second;
-                cost+=(weight_1_unit)*W;
-                break;
+                if(W!=0){
+                    double value_weight=(double)(vec[i].first)/(double)(vec[i].second);
+                    profit+=(value_weight * W);
+                    W=0;
+                }
             }
+            i++;
         }
-        return cost;
+        
+        return profit;
     }
         
 };
