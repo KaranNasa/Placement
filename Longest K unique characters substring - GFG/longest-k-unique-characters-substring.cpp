@@ -11,34 +11,30 @@ class Solution{
   public:
     int longestKSubstr(string s, int k) {
     // your code here
+    
         unordered_map<char,int> m;
-        int max_length=-1;
-        int i=0,j=0,n=s.length();
-        
+        int n=s.length(),maxi=-1;
+        int i=0,j=0;
         while(j<n){
             m[s[j]]++;
             if(m.size()<k)
                 j++;
             else if(m.size()==k){
-                max_length=max(max_length,j-i+1);
+                maxi=max(maxi,j-i+1);
                 j++;
             }
             else{
-                while(i<n and m.size()>k){
+                while(m.size()>k){
                     m[s[i]]--;
                     if(m[s[i]]==0)
                         m.erase(s[i]);
-                    
                     i++;
                 }
-                
-                // now size again becomes equal to k
-                max_length=max(max_length,j-i+1);
+                maxi=max(maxi,j-i+1);
                 j++;
             }
         }
-        
-        return max_length;
+        return maxi;
     }
 };
 
