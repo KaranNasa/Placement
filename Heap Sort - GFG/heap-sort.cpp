@@ -18,13 +18,13 @@ class Solution
       int li=2*i+1,ri=2*i+2;
       int largest=i;
       
-      if(li < n and arr[li]>arr[largest])
+      if(li<n and arr[li] > arr[largest])
         largest=li;
     
       if(ri<n and arr[ri] > arr[largest])
         largest=ri;
     
-      if(largest!=i){
+      if(largest != i){
           swap(arr[i],arr[largest]);
           heapify(arr,n,largest);
       }
@@ -35,6 +35,7 @@ class Solution
     void buildHeap(int arr[], int n)  
     { 
     // Your Code Here
+    
         for(int i=(n-2)/2;i>=0;i--){
             heapify(arr,n,i);
         }
