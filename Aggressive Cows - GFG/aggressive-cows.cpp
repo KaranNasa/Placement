@@ -9,34 +9,41 @@ using namespace std;
 
 class Solution {
 public:
-    bool place_cows(vector<int> &stalls,int n,int k,int min_distance)
+    bool place_cows(int n,vector<int> &stalls,int max_cows,int min_distance)
     {
-        int count_cow=1,prev_cow_stall=stalls[0];
+        // at first, the first cow will always be placed at 0th index
+        int curr_count_cow=1,last_cow_postion=stalls[0];
+        
         for(int i=1;i<n;i++){
-            if(stalls[i] - prev_cow_stall >= min_distance){
-                count_cow++;
-                prev_cow_stall=stalls[i];
+            if(stalls[i] - last_cow_postion >= min_distance){
+                curr_count_cow++;
+                last_cow_postion=stalls[i];
             }
             
-            if(count_cow==k)
+            if(curr_count_cow == max_cows)
                 return true;
         }
+        
         return false;
     }
     int solve(int n, int k, vector<int> &stalls) {
     
         // Write your code here
+        
         sort(stalls.begin(),stalls.end());
+        
+        int maxi=-1;
+        for(auto itr:stalls)
+            maxi=max(maxi,itr);
+        
+        int s=1,e=maxi;
         int ans=-1;
-        int s=1,e=stalls[n-1];
         while(s<=e){
-            int mid=s+(e-s)/2;
-            bool check=place_cows(stalls,n,k,mid);
+            int mid=s+(e-s)/2;  // mid will define the minimum distance between any 2 consecutive cows
             
-            // cout<<mid<<" "<<check<<endl;
-            if(check){
+            if(place_cows(n,stalls,k,mid)){
                 ans=mid;
-                s=mid+1;
+                s=mid+1;    // since we want max hence
             }
             else{
                 e=mid-1;
