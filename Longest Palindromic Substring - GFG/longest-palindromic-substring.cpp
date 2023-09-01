@@ -11,39 +11,39 @@ class Solution{
 public:
     string longestPalindrome(string s){
         // code here 
-        
-          int n=s.length();
-        vector<vector<int>> dp(n,vector<int>(n,0));
+        int n=s.length();
+        int start=0,len=1;  // min length will always be 1
+        int low,high;
 
-        string ans="";
-        int maxlength=0;
-
-        // for single substring
-        for(int diff=0;diff<n;diff++)
-        {
-            for(int i=0,j=i+diff;j<n;i++,j++){
-                if(i==j)
-                    dp[i][j]=1;
-                
-                else if(diff==1){
-                    if(s[i] == s[j])
-                        dp[i][j]=2;
-                }
-                else{
-                    if(s[i] == s[j]){
-                        if(dp[i+1][j-1] != 0)
-                            dp[i][j] = 2 + dp[i+1][j-1];
-                    }
+        for(int i=1;i<n;i++){
+            
+            // even case
+            low=i,high=i-1;
+            while(low>=0 and high<n and s[low] == s[high]){
+                if(high-low+1 >len){
+                    start=low;
+                    len=high-low+1;
                 }
 
-                if(dp[i][j] > 0 and dp[i][j] > maxlength){
-                    maxlength=dp[i][j];
-                    ans=s.substr(i,j-i+1);  // sbstring from i,j. Pass index and the length
+                low--;
+                high++;
+            }
+            
+            // odd case
+            low=i-1,high=i+1;
+
+            while(low>=0 and high<n and s[low] == s[high]){
+                if(high-low+1 > len){
+                    start=low;
+                    len=high-low+1;
                 }
+
+                high++;
+                low--;
             }
         }
 
-        return ans;
+        return s.substr(start,len);
     }
 };
 
