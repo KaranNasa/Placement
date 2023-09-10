@@ -15,7 +15,63 @@ struct Node {
     }
 };
 
-Node* insert(Node* node, int data);
+
+// } Driver Code Ends
+// Function to insert a node in a BST.
+
+/*
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution
+{
+    public:
+        Node* insert(Node* node, int data) {
+        
+            // Your code goes here
+            Node *new_node=new Node(data);
+            if(node==NULL)
+                return new_node;
+                
+            Node *p=node;
+            while(true)
+            {
+                if(p->data == data)
+                    break;
+                    
+                if(p->data > data){
+                    if(p->left==NULL){
+                        p->left=new_node;
+                        break;
+                    }
+                    else
+                        p=p->left;
+                }
+                else{
+                    if(p->right==NULL){
+                        p->right=new_node;
+                        break;
+                    }
+                    else
+                        p=p->right;
+                }
+            }
+            return node;
+    }
+
+};
+
+
+//{ Driver Code Starts.
 
 // Function to Build Tree
 Node* buildTree(string str) {
@@ -99,8 +155,8 @@ int main() {
         getline(cin, s);
         int k = stoi(s);
         // getline(cin, s);
-
-        insert(root, k);
+        Solution ob;
+        ob.insert(root, k);
         vector<int> v;
         inorder(root, v);
         for (int i = 0; i < v.size(); i++) cout << v[i] << " ";
@@ -112,47 +168,3 @@ int main() {
 }
 
 // } Driver Code Ends
-
-
-// Function to insert a node in a BST.
-Node* insert(Node* root, int Key) {
-    // Your code here
-    Node *node1=new Node(Key);
-    if(root==NULL)
-    {
-        root=node1;
-        return root;
-    }
-    
-    while(root)
-    {
-        if(root->data==Key)
-        {
-            return root;
-        }
-        
-        if(root->data>Key)
-        {
-               if(root->left==NULL)
-               {
-                   root->left=node1;
-                //   return root;
-                break;
-               }
-               else{
-                   root=root->left;
-               }
-        }
-        else{
-            if(root->right==NULL)
-            {
-                root->right=node1;
-               break;
-            }
-            else{
-                root=root->right;
-            }
-        }
-    }
-    return root;
-}
