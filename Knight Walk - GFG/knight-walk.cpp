@@ -44,8 +44,8 @@ public:
 	   // vis[KnightPos[0]][KnightPos[1]]=1;
 	    
 	    while(!q.empty()){
-	        int size=q.size();
-	        while(size--){
+	       // int size=q.size();
+	       // while(size--){
     	        int x=q.front()->i;
     	        int y=q.front()->j;
     	        int distance=q.front()->dist;
@@ -64,7 +64,7 @@ public:
     	                vis[val_x][val_y]=1;
     	                q.push(new_node_add);
     	            }
-    	        }
+    	       // }
 	        }
 	    }
 	    return -1;  // if we cannot reach
