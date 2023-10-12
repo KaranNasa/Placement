@@ -50,43 +50,26 @@ public:
 
 /* The below method sorts the stack s 
 you are required to complete the below method */
-void insert(stack<int> &s,int top_elem)
+
+void insert_position(stack<int> &s,int elem)
 {
-    // Base-Case
-    if(s.size()==0 || s.top()<=top_elem)
-    {
-        s.push(top_elem);
+    if(s.empty() || elem > s.top()){
+        s.push(elem);
         return;
     }
-    // Hypothesis
-    int elem=s.top();
-    s.pop();
-    insert(s,top_elem);
-    
-    //Induction - pop element usse wapis stack mai daal do
-    
-    // joo yahaan pop out hue honge woh basically woh element honge joo top_elem se bade hai
-    
-    s.push(elem);
-}
-void sort1(stack<int> &s)
-{
-    // Base-Case
-    if(s.size()==1)
-        return;
-    
-    //Hypothesis
     int top_elem=s.top();
     s.pop();
-    sort1(s);
-    
-    // Induction - insert the pop element back into the stack into the currect position
-    insert(s,top_elem);
-    
+    insert_position(s,elem);
+    s.push(top_elem);
 }
 void SortedStack :: sort()
 {
    //Your code here
-   sort1(s);
+   if(s.empty())
+    return;
    
+   int elem=s.top();
+   s.pop();
+   sort();
+   insert_position(s,elem);
 }
