@@ -97,10 +97,10 @@ class Solution{
     /*You are required to complete below method */
     int maxLevelSum(Node* root) {
         // Your code here
-        int maxi=INT_MIN;
         if(root->left==NULL and root->right==NULL)
             return root->data;
         
+        int maxi=INT_MIN;
         queue<Node*> q;
         q.push(root);
         while(!q.empty()){
@@ -109,6 +109,7 @@ class Solution{
             while(size--){
                 Node *node=q.front();
                 q.pop();
+                
                 curr_sum+=node->data;
                 
                 if(node->left)
@@ -116,9 +117,11 @@ class Solution{
                 
                 if(node->right)
                     q.push(node->right);
+                
             }
             maxi=max(maxi,curr_sum);
         }
+        
         return maxi;
     }
 };
