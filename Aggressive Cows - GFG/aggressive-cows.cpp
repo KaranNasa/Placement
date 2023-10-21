@@ -9,42 +9,42 @@ using namespace std;
 
 class Solution {
 public:
-    bool can_place_cows(int n,int max_cows,vector<int> &stalls,int min_distance)
+    int solve(int n,int k,vector<int> &stalls,int mini_distance)
     {
-        int curr_cow=1,last_cow_position=stalls[0];
+        int curr_cow_position=stalls[0],cows_placed=1;
         for(int i=1;i<n;i++){
-            if(stalls[i] - last_cow_position >= min_distance){
-                curr_cow++;
-                last_cow_position=stalls[i];
+            if(stalls[i] - curr_cow_position >= mini_distance){
+                cows_placed++;
+                curr_cow_position=stalls[i];
+                if(cows_placed==k)
+                    break;
             }
-            if(curr_cow == max_cows)
-                return true;
         }
-        return false;
+        return cows_placed;
     }
     int solve(int n, int k, vector<int> &stalls) {
     
         // Write your code here
-        
-        // at first sort the array
         sort(stalls.begin(),stalls.end());
         
-        int mini=-1;
-        for(auto itr:stalls)
-            mini=max(mini,itr);
+        // int mini=INT_MAX,maxi=INT_MIN;
+        // for(auto itr:stalls){
+        //     mini=min(mini,itr);
+        //     maxi=max(maxi,itr);
+        // }
         
-        int s=1,e=mini;
+        int s=1,e=stalls[n-1]-stalls[0];
         int ans=-1;
-        
         while(s<=e){
-            int mid=s+(e-s)/2;
+            int mini_distance=s+(e-s)/2;
             
-            if(can_place_cows(n,k,stalls,mid)){
-                ans=mid;
-                s=mid+1;    // since we want max distance
+            int placed_cows=solve(n,k,stalls,mini_distance);
+            if(placed_cows == k){
+                ans=mini_distance;
+                s=mini_distance+1;
             }
             else
-                e=mid-1;
+                e=mini_distance-1;
         }
         return ans;
     }
