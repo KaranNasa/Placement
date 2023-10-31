@@ -8,45 +8,35 @@ class Solution {
   public:
     vector<int> longestIncreasingSubsequence(int n, vector<int>& arr) {
         // Code here
-        
         vector<int> lis(n,1);
-        vector<int> index_table(n);
-        for(int i=0;i<n;i++){
-            index_table[i]=i;
-        }
+        vector<int> parent(n);
+        for(int i=0;i<n;i++)
+            parent[i]=i;
         
-        // compute the lis first
+        int maxi=-1,max_index=-1;
+        
         for(int index=0;index<n;index++){
             for(int prev_index=0;prev_index<index;prev_index++){
-                if(arr[index] > arr[prev_index]){
-                    if(1 + lis[prev_index] > lis[index]){
-                        lis[index]=1+lis[prev_index];
-                        index_table[index]=prev_index;
-                    }
-                    // lis[index]=max(lis[index],1 + lis[prev_index]);
+                if(arr[index] > arr[prev_index] and lis[prev_index] + 1 > lis[index]){
+                    parent[index]=prev_index;
+                    lis[index]=lis[prev_index] + 1;
                 }
             }
-        }
-        
-        // compute the largest lis and its index
-        int max1=INT_MIN,lastindex=-1;
-        for(int i=0;i<n;i++){
-            if(lis[i] > max1){
-                max1=lis[i];
-                lastindex=i;
+            if(lis[index] > maxi)
+            {
+                maxi=lis[index];
+                max_index=index;
             }
         }
         
-        // now we have the index now we can 
+        // cout<<maxi<<" "<<max_index<<endl;
         vector<int> ans;
-        ans.push_back(arr[lastindex]);
-        
-        while(index_table[lastindex] != lastindex){
-            lastindex=index_table[lastindex];
-            ans.push_back(arr[lastindex]);
+        while(max_index != parent[max_index]){
+            ans.push_back(arr[max_index]);
+            max_index=parent[max_index];
         }
+        ans.push_back(arr[max_index]);
         reverse(ans.begin(),ans.end());
-        
         return ans;
     }
 };
