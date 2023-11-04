@@ -103,29 +103,25 @@ class Solution
     {
         //code here
         
-        // Using morris traversal
-        Node *curr=root;
+         Node *curr=root;
         while(curr!=NULL){
             if(curr->left==NULL){
                 curr=curr->right;
             }
             else{
-                Node *prev=curr->left;
-                while(prev->right!=NULL and prev->right!=curr)
-                    prev=prev->right;
+                Node *temp=curr->left;
+                while(temp->right!=NULL)
+                    temp=temp->right;
                 
-                if(curr->right){
-                    prev->right=curr->right;
-                }
-                else{
-                    prev->right=NULL;
-                }
+                if(curr->right!=NULL)
+                    temp->right=curr->right;
+                else
+                    temp->right=NULL;
                 
                 curr->right=curr->left;
                 curr->left=NULL;
-                curr=curr->right;
             }
-        }
+        }   
     }
 };
 
