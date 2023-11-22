@@ -22,18 +22,14 @@ class Solution{
         Node* LCA(Node *root, int n1, int n2)
         {
             // code here
-            
             Node *curr=root;
             while(curr!=NULL){
-                if(curr->data == n1 || curr->data==n2)
+                if(curr->data==n1 || curr->data==n2)
                     return curr;
-                
                 else if(curr->data < n1 and curr->data < n2)
                     curr=curr->right;
-                
                 else if(curr->data > n1 and curr->data > n2)
                     curr=curr->left;
-                
                 else
                     return curr;
             }
