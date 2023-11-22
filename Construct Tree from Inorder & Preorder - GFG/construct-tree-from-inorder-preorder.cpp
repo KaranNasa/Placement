@@ -41,27 +41,27 @@ struct Node
 class Solution{
     public:
     int preIndex=0;
+    
     Node *solve(int in[],int pre[],int start,int end)
     {
         if(start > end)
             return NULL;
         
-        Node *node=new Node(pre[preIndex]);
+        Node *root=new Node(pre[preIndex]);
         preIndex++;
-    
-        int inIndex=0;
+        
+        int inIndex=-1;
         for(int i=start;i<=end;i++){
-            if(in[i]==node->data)
+            if(in[i]==root->data)
             {
                 inIndex=i;
                 break;
             }
         }
+        root->left=solve(in,pre,start,inIndex-1);
+        root->right=solve(in,pre,inIndex+1,end);
         
-        node->left=solve(in,pre,start,inIndex-1);
-        node->right=solve(in,pre,inIndex+1,end);
-        
-        return node;
+        return root;
     }
     Node* buildTree(int in[],int pre[], int n)
     {
