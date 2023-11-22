@@ -44,33 +44,37 @@ class Solution
     vector<int> rightView(Node *root)
     {
        // Your Code here
-       
-       vector<int> ans;
        if(root==NULL)
-        return ans;
-       
-       queue<Node *> q;
-       q.push(root);
-       while(!q.empty()){
-           int size=q.size();
-           int curr_ans=-1;
-           while(size--){
-               Node *node=q.front();
-               q.pop();
+        return {};
+        
+        if(root->left==NULL and root->right==NULL)
+            return {root->data};
+        
+        unordered_map<int,Node*> mp;
+        
+        queue<pair<int,Node*>> pq;
+        pq.push({0,root});
+        
+        vector<int> ans;
+        while(!pq.empty()){
+            int size=pq.size();
+            int level=pq.front().first;
+            while(size--){
+                Node *node=pq.front().second;;
                
-               curr_ans=node->data;
-               
-               if(node->left)
-                q.push(node->left);
-               
-               if(node->right)
-                q.push(node->right);
+                pq.pop();
                 
-           }
-           ans.push_back(curr_ans);
-       }
-       
-       return ans;
+                mp[level]=node;
+                if(node->left)
+                    pq.push({level+1,node->left});
+                
+                if(node->right)
+                    pq.push({level+1,node->right});
+            }
+            
+            ans.push_back(mp[level]->data);
+        }
+        return ans;
     }
 };
 
